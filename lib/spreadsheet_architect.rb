@@ -75,7 +75,7 @@ module SpreadsheetArchitect
         has_custom_columns = options[:spreadsheet_columns] || klass.instance_methods.include?(:spreadsheet_columns)
 
         if !options[:instances] && defined?(ActiveRecord) && klass.ancestors.include?(ActiveRecord::Base)
-          options[:instances] = klass.eager_load(options[:eager_load]).preload(options[:preload]).includes(options[:includes]).joins(options[:joins]).where(options[:where]).order(options[:order]).to_a
+          options[:instances] = klass.where(nil).to_a # triggers the relation call, not sure how this works but it does
         end
 
         if !options[:instances] || options[:instances].empty?
